@@ -1,15 +1,31 @@
-{% include 'navbar.html' %}
+{% extends 'main.html' %}
 
+{% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project</title>
-</head>
-<body>
-    <h1>This is projects file............</h1>
-</body>
-</html>
+<h1>Projects</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for project in projects %}
+        <tr>
+            <td>{{project.id}}</td>
+            <td>
+                {{project.title}}
+                {% if project.topRated %}
+                <strong>Top Rated</strong>
+                {% endif %}
+            </td>
+            <td>{{project.description}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
