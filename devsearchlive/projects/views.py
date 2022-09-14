@@ -1,4 +1,6 @@
+from multiprocessing import context
 from django.shortcuts import render
+from .models import Project
 
 projectList = [
     {
@@ -24,12 +26,13 @@ projectList = [
 
 # Create your views here.
 def projects(request):
-    context = {'projects': projectList}
+    projects = Project.objects.all()
+    print("Project:", projects)
+    context = {'projects': projects}
     return render(request, 'projects/projects.html', context)
 
 def project(request, pk):
-    projectObejct = None
-    for i in projectList:
-        if i['id'] == str(pk):
-            projectObejct = i
-    return render(request, 'projects/single-project.html',{'project': projectObejct})
+    projectObj = Project.objects.get(id=pk)
+    tags = projectObj.tags.all()
+    context = { 'project': projectObj, 'tags': tags }
+    return render(request, 'projects/single-project.html', context)
