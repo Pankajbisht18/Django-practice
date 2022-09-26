@@ -5,7 +5,6 @@ from .forms import ProjectForm
 # Create your views here.
 def projects(request):
     projects = Project.objects.all()
-    print("Project:", projects)
     context = {'projects': projects}
     return render(request, 'projects/projects.html', context)
 
@@ -32,8 +31,8 @@ def createProject(request):
     return render(request, 'projects/project-form.html', context)
 
 def updateProject(request, pk):
-    form = ProjectForm()
-
+    project = Project.objects.get(id=pk)
+    form = ProjectForm(instance=project)
     context = {'form': form}
 
     return render(request, 'projects/project-form.html', context)
